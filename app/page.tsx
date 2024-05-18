@@ -25,10 +25,10 @@ const Home: React.FC = () => {
       </div>
       {/* <VideoPlayer videoId={videoId} /> */}
       <div className='2xl:block hidden'>
-        {videoId && <VideoPlayer videoId={videoId} width={1376} height={774} />}
+        {<VideoPlayer videoId={videoId} width={1376} height={774} />}
       </div>
       <div className='md:block hidden'>
-        {videoId && <VideoPlayer videoId={videoId} width={1200} height={500} />}
+        {<VideoPlayer videoId={videoId} width={1200} height={500} />}
       </div>
 
     </div>

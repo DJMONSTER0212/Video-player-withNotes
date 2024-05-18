@@ -155,7 +155,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
                     </p>
                 </div>
             </div>
-            <Card>
+            <Card className='rounded-xl my-5 pb-6'>
                 <CardHeader className='flex flex-col w-full'>
                     <div className='flex w-full flex-row justify-between'>
                         <div>
@@ -190,25 +190,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
                     <div>
                         {notes.map(note => (
                             <div key={note.id} className='px-6' >
-                                <p className='font-medium text-[#344054] text-sm'>{dateFormatter(note.date)}</p>
-                                <p className='font-medium text-sm text-[#475467]'>Timestamp: {timeStampFormatter(note.timestamp)}</p>
-                                <span onClick={() => handleSeekToTimestamp(note.timestamp)} style={{ cursor: 'pointer' }}>
-                                    <span>{note.content} (Created on: {note.date})</span>
-                                    [{new Date(note.timestamp * 1000).toISOString()}]
-                                </span>
-                                <Button variant={'outline'} onClick={() => handleDeleteNote(note.id)}>Delete</Button>
+                                <div className='cursor-pointer' onClick={() => handleSeekToTimestamp(note.timestamp)}>
+                                    <p className='font-medium text-[#344054] text-sm'>{dateFormatter(note.date)}</p>
+                                    <p className='font-medium text-sm text-[#475467]'>Timestamp: <span className='text-[#6941c6]'>{timeStampFormatter(note.timestamp)}</span></p>
+                                    <div style={{ borderRadius: "0px 8px 8px 8px" }} className='mt-3 border-[#eaecf0] border p-3 '>
+                                        {note.content}
+                                    </div>
+                                </div>
+
+                                <div className='w-full flex items-center mt-3 gap-1 mb-4 justify-end'>
+                                    <button className='px-2 p-0.5 border-2 border-[#d0d5dd] rounded-xl text-[#344054] font-medium text-sm ' onClick={() => handleDeleteNote(note.id)}>Delete note</button>
+                                    <button className='px-2 p-0.5 border-2 border-[#d0d5dd] rounded-xl text-[#344054] font-medium text-sm ' onClick={() => handleDeleteNote(note.id)}>Edit note</button>
+                                </div>
+                                <Separator />
                             </div>
                         ))}
                     </div>
                 </CardDescription>
             </Card>
-            <div className={"notes"}>
-                <h3>Notes</h3>
-                <ul>
-
-                </ul>
-
-            </div>
         </div>
     );
 };
