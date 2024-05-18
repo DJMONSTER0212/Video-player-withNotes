@@ -112,6 +112,30 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
             return videoDesc;
         }
     };
+
+    const timeStampFormatter = (timestamp: number): string => {
+        console.log(timestamp)
+        const minutes = Math.floor(timestamp / 60);
+        const remainingSeconds = Math.floor(timestamp % 60);
+
+        const formattedMinutes = `${minutes.toString().padStart(2, '0')} min`;
+        const formattedSeconds = `${remainingSeconds.toString().padStart(2, '0')} sec`;
+
+        return `${formattedMinutes} ${formattedSeconds}`;
+
+    }
+
+    const dateFormatter = (dateString: any) => {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const month = months[date.getMonth()];
+        const year = date.getFullYear().toString().slice(-2);
+
+        const formattedDate = `${day} ${month} ‘${year}`;
+
+        return formattedDate;
+    }
     return (
         <div className={"px-8 p-2"}>
             <div>
@@ -163,21 +187,25 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
                     <Separator />
                 </CardHeader>
                 <CardDescription>
-
+                    <div>
+                        {notes.map(note => (
+                            <div key={note.id} className='px-6' >
+                                <p className='font-medium text-[#344054] text-sm'>{dateFormatter(note.date)}</p>
+                                <p className='font-medium text-sm text-[#475467]'>Timestamp: {timeStampFormatter(note.timestamp)}</p>
+                                <span onClick={() => handleSeekToTimestamp(note.timestamp)} style={{ cursor: 'pointer' }}>
+                                    <span>{note.content} (Created on: {note.date})</span>
+                                    [{new Date(note.timestamp * 1000).toISOString()}]
+                                </span>
+                                <Button variant={'outline'} onClick={() => handleDeleteNote(note.id)}>Delete</Button>
+                            </div>
+                        ))}
+                    </div>
                 </CardDescription>
             </Card>
             <div className={"notes"}>
                 <h3>Notes</h3>
                 <ul>
-                    {notes.map(note => (
-                        <li key={note.id} className={"note"}>
-                            <span onClick={() => handleSeekToTimestamp(note.timestamp)} style={{ cursor: 'pointer' }}>
-                                [{new Date(note.timestamp * 1000).toISOString()}]
-                            </span>
-                            <span>{note.content} (Created on: {note.date})</span>
-                            <button onClick={() => handleDeleteNote(note.id)}>Delete</button>
-                        </li>
-                    ))}
+
                 </ul>
 
             </div>
