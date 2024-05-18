@@ -24,13 +24,15 @@ const Home: React.FC = () => {
         />
       </div>
       {/* <VideoPlayer videoId={videoId} /> */}
-      <div className='2xl:block hidden'>
+      <div className='xl:block hidden'>
         {<VideoPlayer videoId={videoId} width={1376} height={774} />}
       </div>
-      <div className='md:block hidden'>
+      <div className='md:block xl:hidden  hidden'>
         {<VideoPlayer videoId={videoId} width={1200} height={500} />}
       </div>
-
+      <div className='md:hidden block'>
+        {<VideoPlayer videoId={videoId} width={500} height={400} />}
+      </div>
     </div>
   );
 };

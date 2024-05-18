@@ -168,13 +168,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
             </div>
             <Card className='rounded-xl my-5 pb-6'>
                 <CardHeader className='flex flex-col w-full'>
-                    <div className='flex w-full flex-row justify-between'>
+                    <div className='flex w-full md:flex-row flex-col md:justify-between items-start'>
                         <div>
                             <CardTitle className='font-semibold text-lg text-[#101828]'>My notes</CardTitle>
                             <CardDescription className='font-normal text-[#475467] text-sm'>All your notes at single place. Click on any note to go to specific timestamp in the video</CardDescription>
                         </div>
                         <AlertDialog>
-                            <AlertDialogTrigger><Button variant={'outline'} className='text-sm font-semibold gap-1 text-[#344054]'><PlusCircleIcon className='text-[#667085]' size={20} /> Add new note</Button></AlertDialogTrigger>
+                            <AlertDialogTrigger><Button  variant={'outline'} className='text-sm md:mt-0 mt-4 font-semibold gap-1 text-[#344054]'><PlusCircleIcon className='text-[#667085]' size={20} /> Add new note</Button></AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>
                                     <AlertDialogTitle>Add new note</AlertDialogTitle>
