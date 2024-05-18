@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import VideoPlayer from '@/components/VideoPlayer';
+import { Input } from '@/components/ui/input';
 
 const Home: React.FC = () => {
   const [videoId, setVideoId] = useState(''); // Default video ID
@@ -10,15 +11,26 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>YouTube Notes App</h1>
-      <input
-        type="text"
-        value={videoId}
-        onChange={handleVideoIdChange}
-        placeholder="Enter YouTube Video ID"
-      />
-      <VideoPlayer videoId={videoId} />
+    <div >
+
+      <h1 className='p-8  text-[#101828] text-3xl font-semibold '>Video Player with Notes</h1>
+      <div className='w-full flex items-end px-8 mb-5'>
+        <Input
+          className='items-end justify-end flex w-fit '
+          type="text"
+          value={videoId}
+          onChange={handleVideoIdChange}
+          placeholder="Enter YouTube Video ID"
+        />
+      </div>
+      {/* <VideoPlayer videoId={videoId} /> */}
+      <div className='2xl:block hidden'>
+        {videoId && <VideoPlayer videoId={videoId} width={1376} height={774} />}
+      </div>
+      <div className='md:block hidden'>
+        {videoId && <VideoPlayer videoId={videoId} width={1200} height={500} />}
+      </div>
+
     </div>
   );
 };
