@@ -24,6 +24,7 @@ import { Button } from './ui/button';
 import { PlusCircleIcon } from 'lucide-react';
 import { Input } from './ui/input';
 import { Separator } from './ui/separator';
+import NoteCard from './NoteCard';
 
 interface Note {
     id: number;
@@ -45,7 +46,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
     const [showFullText, setShowFullText] = useState(false);
     const [videotitle, setVideoTitle] = useState("")
     const [videoDesc, setVideoDesc] = useState("");
-    // console.log(videoId)
+    const [isEditing, setIsEditing] = useState(false);
+    const [EditingNodeText,setEditingNoteText] = useState("");
 
     useEffect(() => {
         const storedNotes = localStorage.getItem(`notes-${videoId}`);
@@ -71,7 +73,16 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
         setNotes(updatedNotes);
         localStorage.setItem(`notes-${videoId}`, JSON.stringify(updatedNotes));
     };
-
+    const handleEditNote = (index: number)=>{
+        let temp = notes;
+        // console.log(temp[index].content);
+        temp[index].content = EditingNodeText
+        // console.log(temp[index].content);
+        // console.log(temp[index])
+        setNotes(temp);
+        localStorage.setItem(`notes-${videoId}`, JSON.stringify(temp));
+        setIsEditing(false);
+    }
     const handleSeekToTimestamp = (timestamp: number) => {
         playerRef.current.internalPlayer.seekTo(timestamp, true);
     };
@@ -114,7 +125,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
     };
 
     const timeStampFormatter = (timestamp: number): string => {
-        console.log(timestamp)
+
         const minutes = Math.floor(timestamp / 60);
         const remainingSeconds = Math.floor(timestamp % 60);
 
@@ -188,20 +199,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
                 </CardHeader>
                 <CardDescription>
                     <div>
-                        {notes.map(note => (
+                        {notes.map((note,index):any => (
                             <div key={note.id} className='px-6' >
-                                <div className='cursor-pointer' onClick={() => handleSeekToTimestamp(note.timestamp)}>
-                                    <p className='font-medium text-[#344054] text-sm'>{dateFormatter(note.date)}</p>
-                                    <p className='font-medium text-sm text-[#475467]'>Timestamp: <span className='text-[#6941c6]'>{timeStampFormatter(note.timestamp)}</span></p>
-                                    <div style={{ borderRadius: "0px 8px 8px 8px" }} className='mt-3 border-[#eaecf0] border p-3 '>
-                                        {note.content}
-                                    </div>
-                                </div>
-
-                                <div className='w-full flex items-center mt-3 gap-1 mb-4 justify-end'>
-                                    <button className='px-2 p-0.5 border-2 border-[#d0d5dd] rounded-xl text-[#344054] font-medium text-sm ' onClick={() => handleDeleteNote(note.id)}>Delete note</button>
-                                    <button className='px-2 p-0.5 border-2 border-[#d0d5dd] rounded-xl text-[#344054] font-medium text-sm ' onClick={() => handleDeleteNote(note.id)}>Edit note</button>
-                                </div>
+                                <NoteCard note={note} index={index} notes={notes} setNotes={setNotes} videoId={videoId} playerRef={playerRef} />
                                 <Separator />
                             </div>
                         ))}
